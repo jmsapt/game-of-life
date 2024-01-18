@@ -43,14 +43,16 @@ jobs:
       - name: Install NPM Dependencies
         run: cd ./docs && npm install && npm run build
 
+        # Build tar file
+      - name: Build Tar file
+        run: tar -czvf . build.tar
+
         # Upload the html artifact
       - name: Upload  artifact
         uses: actions/upload-pages-artifact@v1
         with:
           name: github-pages
-          path: |
-            ./docs/*.*
-            ./pkg/
+          path: build.tar
   deploy:
     needs: build
 
