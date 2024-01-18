@@ -49,9 +49,8 @@ jobs:
         with:
           name: webapp
           path: |
-            ./docs/
+            ./docs/*.*
             ./pkg/
-            !./docs/node_modeules/
 
         
   deploy:
