@@ -50,6 +50,7 @@ jobs:
         with:
           name: docs
           path: './docs'
+          exclude: './docs/node_modules'
 
         # Upload the wasm artifact
       - name: Upload wasm-pack pkg artifact
