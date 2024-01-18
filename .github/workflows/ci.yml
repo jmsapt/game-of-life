@@ -45,15 +45,14 @@ jobs:
 
         
         # Upload the html artifact
-      - name: Upload docs artifact
+      - name: Upload  artifact
         uses: actions/upload-artifact@v2
         with:
           name: docs
-          path: './docs'
-          exclude: './docs/node_modules'
+          path: ./docs/*.*
 
         # Upload the wasm artifact
-      - name: Upload wasm-pack pkg artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: wasm-pack-pkg
@@ -80,4 +79,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v2
         with:
-            artifact_name: docs
+            artifact_name: webapp
