@@ -33,7 +33,7 @@ jobs:
 
         # Get NPM dependencies
       - name: Install NPM Dependencies
-        run: cd $HTMLPATH && npm install
+        run: cd ./docs && npm install
 
         # Build Rust
       - name: Install Rust Dependencies
