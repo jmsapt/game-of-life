@@ -33,16 +33,33 @@ jobs:
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
+        # Get NPM dependencies
       - name: Install NPM Dependencies
         run: cd $HTMLPATH && npm install
 
+        # Build Rust
       - name: Install Rust Dependencies
         run: |
           cargo install wasm-pack || true \
             && rustup target add wasm32-unknown-unknown
-
       - name: Build the Rust WASM
         run: wasm-pack build
+
+        
+        # Upload the html artifact
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: docs
+          path: $HTMLPATH
+
+        # Upload the wasm artifact
+      - name: Upload wasm-pack pkg artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: wasm-pack-pkg
+          path: './pkg'
+          
         
   deploy:
     needs: build
@@ -59,20 +76,6 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
-        # Upload the html artifact
-      - name: Upload docs artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: docs
-          path: $HTMLPATH
-
-        # Upload the wasm artifact
-      - name: Upload wasm-pack pkg artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: wasm-pack-pkg
-          path: './pkg'
-          
           
       - name: Deploy to GitHub Pages
         id: deployment
