@@ -41,7 +41,7 @@ jobs:
 
         # Upload the html artifact
       - name: Upload  artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-page-artifact@v1
         with:
           name: webapp
           path: |
