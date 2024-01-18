@@ -81,4 +81,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v2
         with:
-            folder: './docs'
+            artifact_name: docs
