@@ -43,21 +43,16 @@ jobs:
       - name: Build the Rust WASM
         run: wasm-pack build
 
-        
         # Upload the html artifact
       - name: Upload  artifact
         uses: actions/upload-artifact@v2
         with:
           name: webapp
-          path: ./docs/*.*
+          path: |
+            ./docs/
+            ./pkg/
+            !./docs/node_modeules/
 
-        # Upload the wasm artifact
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: wasm-pack-pkg
-          path: './pkg'
-          
         
   deploy:
     needs: build
@@ -74,7 +69,6 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
-          
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
