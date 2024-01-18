@@ -1,6 +1,4 @@
 name: Deploy GitHub Pages
-env:
-  HTMLPATH: './docs'
 
 on:
   push:
@@ -51,7 +49,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: docs
-          path: $HTMLPATH
+          path: './docs'
 
         # Upload the wasm artifact
       - name: Upload wasm-pack pkg artifact
