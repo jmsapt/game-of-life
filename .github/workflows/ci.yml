@@ -1,4 +1,6 @@
 name: Deploy GitHub Pages
+env:
+  HTMLPATH: './docs'
 
 on:
   push:
@@ -31,20 +33,16 @@ jobs:
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Install dependencies
+      - name: Install Rust Dependencies
         run: |
-          cargo install trunk || true \
+          cargo install wasm-pack || true \
             && rustup target add wasm32-unknown-unknown
 
-      - name: Build the Rust WASM app and all of its assets
-        run: trunk build --public-url ${{ github.event.repository.name }}/docs
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v2
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: './dist'
+      - name: Build the Rust WASM
+        run: wasm-pack build
+        
+      - name: Install NPM Dependencies
+        run: cd $HTMLPATH && npm install
 
   deploy:
     needs: build
@@ -55,6 +53,27 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+        # Upload the html artifact
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: docs
+          path: $HTMLPATH
+
+        # Upload the wasm artifact
+      - name: Upload wasm-pack pkg artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: wasm-pack-pkg
+          path: './pkg'
+          
+          
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v2
