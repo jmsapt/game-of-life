@@ -30,11 +30,7 @@ jobs:
             ~/.cargo/registry
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-
-        # Get NPM dependencies
-      - name: Install NPM Dependencies
-        run: cd ./docs && npm install && npm run build
-
+          
         # Build Rust
       - name: Install Rust Dependencies
         run: |
@@ -52,7 +48,9 @@ jobs:
             ./docs/*.*
             ./pkg/
 
-        
+        # Get NPM dependencies
+      - name: Install NPM Dependencies
+        run: cd ./docs && npm install && npm run build
   deploy:
     needs: build
 
