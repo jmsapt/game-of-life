@@ -39,6 +39,10 @@ jobs:
       - name: Build the Rust WASM
         run: wasm-pack build
 
+        # Get NPM dependencies
+      - name: Install NPM Dependencies
+        run: cd ./docs && npm install && npm run build
+
         # Upload the html artifact
       - name: Upload  artifact
         uses: actions/upload-artifact@v2
@@ -47,10 +51,6 @@ jobs:
           path: |
             ./docs/*.*
             ./pkg/
-
-        # Get NPM dependencies
-      - name: Install NPM Dependencies
-        run: cd ./docs && npm install && npm run build
   deploy:
     needs: build
 
