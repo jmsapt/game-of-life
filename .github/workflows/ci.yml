@@ -33,10 +33,7 @@ jobs:
 
         # Get NPM dependencies
       - name: Install NPM Dependencies
-        run: |
-          cd ./docs
-          npm install
-          npm run build
+        run: cd ./docs && npm install && npm run build
 
         # Build Rust
       - name: Install Rust Dependencies
