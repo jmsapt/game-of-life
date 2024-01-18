@@ -4,6 +4,7 @@ use std::{cell, ops::Index, thread::sleep, fmt};
 
 use fixedbitset::FixedBitSet;
 use wasm_bindgen::prelude::*;
+use web_sys::js_sys::Math::random;
 
 #[wasm_bindgen]
 extern "C" {
@@ -15,13 +16,6 @@ pub fn greet(name: &str) {
     alert(name);
 }
 
-// #[wasm_bindgen]
-// #[repr(u8)]
-// #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-// pub enum Cell {
-//     Dead = 0,
-//     Alive = 1,
-// }
 
 #[wasm_bindgen]
 pub struct Universe {
@@ -76,17 +70,23 @@ impl Universe {
         self.cells = next_gen;
     }
 
-    pub fn new() -> Self {
-        utils::set_panic_hook();
-        let width = 128;
-        let height = 128;
-            
-        println!("here");
-        let mut cells = FixedBitSet::with_capacity(width * height);
-        (0..width * height).for_each(|i| {
-            cells.set(i, i % 2 == 0 || i % 7 == 0)
+    /// Reset all cells, with a 25% chance for any given cell to start alive.
+    pub fn set_random(&mut self, living_chance: f64) {
+        assert!(living_chance > 0.0 && living_chance < 1.0);
+        (0..self.height * self.width).into_iter()
+            .for_each(|i| {
+                self.cells.set(i, random() > (1.0 - living_chance))
         });
+    }
+    
+    pub fn set_blank(&mut self) {
+        self.cells.set_range(0..self.width * self.height, false);
+    }
 
+    pub fn new(width: usize, height: usize) -> Self {
+        utils::set_panic_hook();
+
+        let cells = FixedBitSet::with_capacity(width * height);
 
         Universe {
             width,

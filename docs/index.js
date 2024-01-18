@@ -1,7 +1,7 @@
 import { Universe } from "wasm-game-of-life";
 import { memory } from "wasm-game-of-life/game_of_life_bg.wasm";
 
-const CELL_SIZE = 8; // px
+const CELL_SIZE = 10; // px
 const GRID_COLOR = "#CCCCCC";
 const DEAD_COLOR = "#FFFFFF";
 const ALIVE_COLOR = "#000000";
@@ -9,6 +9,9 @@ const ALIVE_COLOR = "#000000";
 // play-pause button functionality
 let animationId = null;
 const playPauseButton = document.getElementById("play-pause-button");
+const blankResetButton = document.getElementById("blank-reset-button");
+const randomResetButton = document.getElementById("random-reset-button");
+
 
 const isPaused = () => {
     return animationId === null;
@@ -35,8 +38,32 @@ playPauseButton.addEventListener("click", event => {
     }
 });
 
+randomResetButton.addEventListener("click", event => {
+    // pause game
+    pause();
+
+    // reset universe to random with 25% alive chance
+    universe.set_random(0.25);
+    console.log("Universe reset to random");
+
+    // redraw cells
+    drawCells();
+});
+
+blankResetButton.addEventListener("click", event => {
+    // pause game
+    pause();
+    
+    // reset universe to blank
+    universe.set_blank();
+    console.log("Universe reset to blank");
+
+    // redraw cells
+    drawCells();
+});
+
 // Construct the universe, and get its width and height.
-const universe = Universe.new();
+const universe = Universe.new(100, 100);
 const width = universe.width();
 const height = universe.height();
 
@@ -68,6 +95,7 @@ canvas.addEventListener("click", event => {
 
 // rendering logic
 const renderLoop = () => {
+
     universe.tick();
 
     drawGrid();
