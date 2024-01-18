@@ -41,9 +41,9 @@ jobs:
 
         # Upload the html artifact
       - name: Upload  artifact
-        uses: actions/upload-page-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
-          name: webapp
+          name: github-pages
           path: |
             ./docs/*.*
             ./pkg/
@@ -70,4 +70,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v2
         with:
-            artifact_name: webapp
+            artifact_name: github-pages
