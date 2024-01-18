@@ -45,7 +45,7 @@ jobs:
 
         # Build tar file
       - name: Build Tar file
-        run: tar -czvf . build.tar
+        run: tar -czvf build.tar .
 
         # Upload the html artifact
       - name: Upload  artifact
