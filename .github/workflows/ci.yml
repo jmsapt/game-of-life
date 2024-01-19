@@ -44,6 +44,9 @@ jobs:
 
       - name: Build the Rust WASM app and all of its assets
         run: wasm-pack build
+
+      - name: Install NPM Packages
+        run: cd docs && npm install
         
       - name: Build Webpack
         run: cd docs && npm run build 
