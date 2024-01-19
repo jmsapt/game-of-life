@@ -1,7 +1,14 @@
 import { Universe } from "wasm-game-of-life";
 import { memory } from "wasm-game-of-life/game_of_life_bg.wasm";
 
-const CELL_SIZE = 10; // px
+// 20% border on left, right, and bottom
+const CELL_SIZE = 16; // px
+const WIDTH = Number(window.innerWidth * 0.8 / CELL_SIZE); // cells
+const HEIGHT = Number(window.innerHeight * 0.7 / CELL_SIZE); // cells
+const tickrate = 2;
+
+console.log(WIDTH, HEIGHT)
+
 const GRID_COLOR = "#CCCCCC";
 const DEAD_COLOR = "#FFFFFF";
 const ALIVE_COLOR = "#000000";
@@ -63,7 +70,7 @@ blankResetButton.addEventListener("click", event => {
 });
 
 // Construct the universe, and get its width and height.
-const universe = Universe.new(100, 100);
+const universe = Universe.new(WIDTH, HEIGHT);
 const width = universe.width();
 const height = universe.height();
 
@@ -97,7 +104,6 @@ canvas.addEventListener("click", event => {
 const renderLoop = () => {
 
     universe.tick();
-
     drawGrid();
     drawCells();
 
