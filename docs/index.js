@@ -170,6 +170,7 @@ const bitIsSet = (n, arr) => {
     return (arr[byte] & mask) === mask;
 };
 
+
 // start paused
 drawGrid();
 drawCells();

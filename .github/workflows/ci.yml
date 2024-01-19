@@ -32,22 +32,26 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           
 
-      - name: Install Trunk
-        uses: jetli/trunk-action@v0.4.0
+      - name: Install Wasm Pack
+        uses: jetli/wasm-pack-action@v0.4.0
         with:
-          version: "latest"
-        
+          # Optional version of wasm-pack to install(eg. 'v0.9.1', 'latest')
+          version: 'latest'
+              
       - name: Add wasm target
         run: |
           rustup target add wasm32-unknown-unknown
 
       - name: Build the Rust WASM app and all of its assets
-        run: trunk build --public-url ${{ github.event.repository.name }}
+        run: wasm-pack build
+        
+      - name: Build Webpack
+        run: cd docs && npm run build 
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./dist
+          path: ./docs/dist
         
   deploy:
     needs: build
