@@ -1,0 +1,6 @@
+
+[build]
+# The index HTML file to drive the bundling process.
+target = "docs/index.html"
+release = true
+dist = "dist"
