@@ -44,15 +44,15 @@ jobs:
         run: cd ./docs && npm install && npm run build
 
         # Build tar file
-      - name: Build Tar file
-        run: tar -czvf build.tar .
+      - name: Create webpack
+        run: cd ./docs && webpack
 
         # Upload the html artifact
       - name: Upload  artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: github-pages
-          path: build.tar
+          path: ./docs/dist
   deploy:
     needs: build
 
