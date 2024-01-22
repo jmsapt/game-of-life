@@ -1,70 +1,106 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Game of Life</title>
-    <link rel="stylesheet" href="style.css"> 
-    <style>
-      html, body { margin: 0; padding: 0; }
 
-.button {
-    background-color: #04AA6D;
-    /* Green */
-    border: none;
-    color: white;
-    padding: 8px 16px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
-    cursor: pointer;
-    height: 40px;
-}
+<head>
+  <meta charset="utf-8">
+  <title>Game of Life</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
 
-.button-hover {
-    background-color: white;
-    color: black;
-    border: 2px solid #555555;
-}
+    .button {
+      background-color: #04AA6D;
+      /* Green */
+      border: none;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      transition-duration: 0.4s;
+      cursor: pointer;
+    }
 
-.button-hover:hover {
-    background-color: #555555;
-    color: white;
-}
+    .button-hover {
+      background-color: white;
+      color: black;
+      border: 2px solid #555555;
+    }
 
-body {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-family: Arial, Helvetica, sans-serif;
-}
+    .button-hover:hover {
+      background-color: #555555;
+      color: white;
+    }
 
-h1 {
-    font-size: xx-large;
-}
+    body {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 90%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 4px 2px;
+      padding: 8px 16px;
+      font-size: 16px;
+    }
 
-    </style>
-  </head>
-  <body>
-    <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
+    h1 {
+      font-size: xx-large;
+    }
 
-    <h1>Conway's Game of Life</h1>
-    
-    <div>
-      <button class="button button-hover", id="play-pause-button"></button>
-      <button class="button button-hover", id="blank-reset-button">New Blank</button>
-      <button class="button button-hover", id="random-reset-button">New Random</button>
+
+    /* Slider styling */
+    input[type="range"] {
+      width: 200px;
+      /* align-items: center; */
+      /* justify-content: center; */
+      vertical-align: bottom;
+      padding: 10px;
+    }
+
+    /* Box styling */
+    .box {
+      border: 2px solid #555555;
+      text-align: center;
+      align-items: center;
+      display: inline;
+      text-align: center;
+      padding: 10px 16px;
+      margin: 4px 2px;
+    }
+
+    .text {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
+
+  <h1>Conway's Game of Life</h1>
+
+  <div>
+    <button class="button button-hover" , id="play-pause-button"></button>
+    <button class="button button-hover" , id="blank-reset-button">New Blank</button>
+    <button class="button button-hover" , id="random-reset-button">New Random</button>
+    <!-- Box containing label and slider -->
+    <div class="box">
+      <label for="slider-label">Ticks per Second</label>
+      <label for="tick-rate-label" , id="tick-rate-label">slider value</label>
+      <input type="range" id="tick-rate-slider" name="slider" min="1" max="60" value="30" step="1">
     </div>
-    
-    <canvas id="game-of-life-canvas"></canvas>  
-    <script src="./bootstrap.js"></script>
-  </body>
+  </div>
+
+  <canvas id="game-of-life-canvas"></canvas>
+  <script src="./bootstrap.js"></script>
+</body>
+
 </html>
